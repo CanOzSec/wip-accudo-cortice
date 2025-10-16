@@ -103,11 +103,32 @@ function install_dotfiles(){
 
 function cleanup(){
     rm -rf /tmp/*
-    updatedb
     chmod +x /opt/symlinks/*
+    /opt/symlinks/go clean -cache
+    su -Pc '/opt/symlinks/go clean -cache' - user
+    rm /opt/repositories/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz
+    rm -rf /opt/repositories/go/pkg/mod/
+    # remove git trackers since they use lots of space.
+    rm -rf /opt/repositories/Responder/.git*
+    rm -rf /opt/repositories/exploitdb/.git*
+    rm -rf /opt/repositories/hashgrab/.git*
+    rm -rf /opt/repositories/john/.git*
+    rm -rf /opt/repositories/john/src
+    rm -rf /opt/repositories/jwt_tool/.git*
+    rm -rf /opt/repositories/krbrelayx/.git*
+    rm -rf /opt/repositories/phpggc/.git*
+    rm -rf /opt/repositories/pygpoabuse/.git*
+    rm -rf /opt/repositories/remote-method-guesser/.git*
+    rm -rf /opt/repositories/seclists/.git*
+    rm -rf /opt/repositories/seclists/.bin
+    rm -rf /opt/repositories/sliver/.git*
+    rm -rf /opt/repositories/sqlmap/.git*
+    rm -rf /opt/repositories/theharvester/.git*
+    rm -rf /opt/repositories/username-anarchy/.git*
     # Workaround for llvm Too many levels of symbolic links @ dir_initialize
     rm -rf /usr/lib/llvm-19/build/Debug+Asserts
     rm -rf /usr/lib/llvm-19/build/Release
+    updatedb
 }
 
 
