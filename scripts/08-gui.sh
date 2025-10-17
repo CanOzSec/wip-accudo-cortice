@@ -49,7 +49,7 @@ function install_jadx() {
 
 
 install_apttools
-install_burpsuite
+install_burpsuite # burp browser doesn't seem to work.
 install_ghidra
 install_freerdp3
 install_remmina

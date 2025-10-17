@@ -1,4 +1,4 @@
-FROM debian:13-slim
+FROM debian:13-slim AS base
 
 
 RUN mkdir /opt/scripts
@@ -37,3 +37,6 @@ COPY dotfiles /opt/dotfiles
 
 COPY scripts/09-misc.sh /opt/scripts
 RUN chmod +x ./09-misc.sh && ./09-misc.sh
+
+FROM scratch
+COPY --from=base / /
