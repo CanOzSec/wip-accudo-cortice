@@ -2,32 +2,6 @@
 source ./helper-functions.sh
 
 
-function download_seclists() {
-    git clone https://github.com/danielmiessler/SecLists.git /opt/repositories/seclists
-    error_handling "downloading Seclists" "Downloaded Seclists"
-    tar -xvf /opt/repositories/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz -C /opt/repositories/seclists/Passwords/
-    error_handling "Extracting rockyou.txt"
-}
-
-
-function download_sharpcollection() {
-    git clone https://github.com/Flangvik/SharpCollection /opt/attack/SharpCollection
-    error_handling "downloading SharpCollection" "Downloaded SharpCollection"
-}
-
-
-function download_peassng() {
-    mkdir /opt/attack/peass-ng
-    curl -fLo /opt/attack/peass-ng/linpeas_linux_amd64 https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas_linux_amd64
-    curl -fLo /opt/attack/peass-ng/linpeas.sh https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh
-    curl -fLo /opt/attack/peass-ng/winPEASx64.exe https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASx64.exe
-    curl -fLo /opt/attack/peass-ng/winPEASx64_ofs.exe https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEASx64_ofs.exe
-    curl -fLo /opt/attack/peass-ng/winPEAS.ps1 https://raw.githubusercontent.com/peass-ng/PEASS-ng/master/winPEAS/winPEASps1/winPEAS.ps1
-    curl -fLo /opt/attack/peass-ng/winPEAS.bat https://github.com/peass-ng/PEASS-ng/releases/latest/download/winPEAS.bat
-    error_handling "downloading peass-ng" "Downloaded peass-ng"
-}
-
-
 function install_usernameanarchy() {
     git clone https://github.com/urbanadventurer/username-anarchy.git /opt/repositories/username-anarchy
     error_handling "downloading username-anarchy" "Downloaded username-anarchy"
@@ -106,8 +80,11 @@ function cleanup(){
     chmod +x /opt/symlinks/*
     /opt/symlinks/go clean -cache
     su -Pc '/opt/symlinks/go clean -cache' - user
-    rm /opt/repositories/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz
+    rm -rf /root/.cache
+    rm -rf /home/user/.cache
     rm -rf /opt/repositories/go/pkg/mod/
+    apt-get clean
+    apt-get distclean
     # remove git trackers since they use lots of space.
     rm -rf /opt/repositories/Responder/.git*
     rm -rf /opt/repositories/exploitdb/.git*
@@ -119,8 +96,6 @@ function cleanup(){
     rm -rf /opt/repositories/phpggc/.git*
     rm -rf /opt/repositories/pygpoabuse/.git*
     rm -rf /opt/repositories/remote-method-guesser/.git*
-    rm -rf /opt/repositories/seclists/.git*
-    rm -rf /opt/repositories/seclists/.bin
     rm -rf /opt/repositories/sliver/.git*
     rm -rf /opt/repositories/sqlmap/.git*
     rm -rf /opt/repositories/theharvester/.git*
@@ -128,13 +103,11 @@ function cleanup(){
     # Workaround for llvm Too many levels of symbolic links @ dir_initialize
     rm -rf /usr/lib/llvm-19/build/Debug+Asserts
     rm -rf /usr/lib/llvm-19/build/Release
+    rm -rf /var/log/*
     updatedb
 }
 
 
-download_seclists
-download_sharpcollection
-download_peassng
 install_usernameanarchy
 install_wister
 install_crunch_cupp_cewl

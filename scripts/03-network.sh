@@ -33,14 +33,16 @@ function install_grpcurl() {
 
 function install_chisel() {
 	git clone https://github.com/jpillora/chisel.git /opt/repositories/chisel
+	mkdir /opt/repositories/chisel/static-binaries/
 	cd /opt/repositories/chisel && GOOS=linux GOARCH=amd64 /opt/symlinks/go build \ 
-	-ldflags="-s -w" -tags netgo,osusergo -o /opt/attack/chisel/chisel-linux-amd64
+	-ldflags="-s -w" -tags netgo,osusergo -o /opt/repositories/chisel/static-binaries/chisel-linux-amd64
 	error_handling "installing chisel" "Installed chisel"
 	cd /opt/repositories/chisel && GOOS=windows GOARCH=amd64 /opt/symlinks/go build \
-	-ldflags="-s -w" -tags netgo,osusergo -o /opt/attack/chisel/chisel-windows-amd64.exe
-	ln -sf /opt/attack/chisel/chisel-linux-amd64 /opt/symlinks/
+	-ldflags="-s -w" -tags netgo,osusergo -o /opt/repositories/chisel/static-binaries/chisel-windows-amd64.exe
+	ln -sf /opt/repositories/chisel/static-binaries/chisel-linux-amd64 /opt/symlinks/
 }
 
 
 install_apttools
 install_grpcurl
+install_chisel

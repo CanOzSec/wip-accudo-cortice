@@ -64,5 +64,5 @@ install_openjdks
 install_go
 install_rust
 install_cross_compilers
-install_nodejs
+# install_nodejs # Optional since it takes a lot of space.
 set_java_version

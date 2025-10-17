@@ -1,5 +1,5 @@
 #!/bin/bash
 
 xhost +local:*
-docker run -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /tmp/accudo-cortice-shared:/tmp/host --user "1000:1000" --network host -e DISPLAY=$DISPLAY -it accudo-cortice 
+docker run -v /opt/attack/:/opt/attack -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /tmp/accudo-cortice-shared:/tmp/host --user "1000:1000" --network host -e DISPLAY=$DISPLAY -it accudo-cortice 
 xhost -local:*
