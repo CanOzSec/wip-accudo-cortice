@@ -14,6 +14,11 @@ function install_burpsuite() {
 	chmod +x /tmp/burp.sh && /tmp/burp.sh -q
 	error_handling "installing burp suite community edition" "Installed burp suite community edition"
 	ln -sf /opt/BurpSuiteCommunity/BurpSuiteCommunity /opt/symlinks/
+	# Fix chrome in docker problem.
+	export chromePath=$(find /opt/BurpSuiteCommunity/burpbrowser/ | grep chrome$)
+	mv $chromePath "$chromePath"_bin
+	echo -e "\#!/bin/sh\n\n\"$chromePath\"_bin --no-sandbox \"$@\"" | tee $chromePath
+	chmod +x $chromePath
 }
 
 

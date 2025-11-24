@@ -34,10 +34,15 @@ if [[ $0 == *"openvpn"* ]]; then
 fi
 
 
+if [[ $0 == *"BurpSuiteCommunity"* ]]; then
+	chromiumGpu="--device /dev/dri"
+fi
+
+
 function run() {
 	docker run -a stdin -a stdout -a stderr														\
 	--env-file /opt/accudo-cortice/config/environment.conf 										\
-	-v $PWD:/opt/host --user "$user" $gui $vpn 													\
+	-v $PWD:/opt/host --user "$user" $gui $vpn $chromiumGpu										\
 	-v /opt/attack/:/opt/attack -w /opt/host 													\
 	--mount type=bind,src=/opt/accudo-cortice/config/krb5.conf,dst=/etc/krb5.conf 				\
 	--mount type=bind,src=/opt/accudo-cortice/config/Responder.conf,dst=/etc/Responder.conf 	\
