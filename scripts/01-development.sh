@@ -36,7 +36,7 @@ function install_rust() {
 
 
 function install_cross_compilers() {
-    apt install -y mingw-w64 binutils-mingw-w64 g++-mingw-w64 g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 osslsigncode
+    apt install -y libclang-dev musl-tools mingw-w64 binutils-mingw-w64 g++-mingw-w64 g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 osslsigncode
     error_handling "installing cross compilers" "Installed cross compilers"
     ln -sf /usr/bin/x86_64-w64-mingw32* /opt/symlinks/
 }

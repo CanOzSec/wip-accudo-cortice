@@ -4,7 +4,8 @@ source ./helper-functions.sh
 
 function install_apttools() {
 	export DEBIAN_FRONTEND=noninteractive
-	apt install -y samdump2 smbclient onesixtyone nbtscan ldap-utils libkrb5-dev krb5-user
+	apt install -y samdump2 smbclient onesixtyone nbtscan ldap-utils \
+	libkrb5-dev krb5-user libkrb5-dev libgssapi-krb5-2 libsasl2-modules-gssapi-mit
 	ln -sf /usr/bin/klist /opt/symlinks/
 	ln -sf /usr/bin/kinit /opt/symlinks/
 	ln -sf /usr/bin/kadmin /opt/symlinks/
@@ -184,6 +185,16 @@ function install_nopac() {
 	sed -i 's/\/usr\/bin\/env python/\/opt\/repositories\/krbrelayx\/virt\/bin\/python3/g' /opt/repositories/noPac/noPac.py
 	chmod +x /opt/repositories/noPac/noPac.py
 	ln -sf /opt/repositories/noPac/noPac.py /opt/symlinks/
+}
+
+
+function install_rusthound() {
+	export RUSTUP_HOME=/opt/languages/rust
+	export CARGO_HOME=/opt/languages/rust
+	export PATH=$PATH:/opt/languages/rust/cargo/bin
+	/opt/symlinks/cargo install rusthound-ce
+	error_handling "installing rusthound-ce" "Installed rusthound-ce"
+	ln -sf /opt/languages/rust/bin/rusthound-ce /opt/symlinks/
 }
 
 
