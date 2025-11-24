@@ -4,8 +4,9 @@ source ./helper-functions.sh
 
 function install_apttools() {
 	export DEBIAN_FRONTEND=noninteractive
-	apt install -y arp-scan ike-scan nmap tcpdump iptables masscan redis-tools postgresql-client \
-				   default-mysql-client proxychains4 hydra tshark p0f dnsmasq hping3
+	apt install -y arp-scan ike-scan nmap tcpdump iptables masscan redis-tools postgresql-client dsniff \
+				   default-mysql-client proxychains4 hydra tshark p0f dnsmasq hping3 snmp libmemcached-tools \
+				   python3-scapy
 	error_handling "installing apt network tools" "Installed apt network tools"
 	ln -sf /usr/sbin/arp-scan /opt/symlinks/
 	ln -sf /usr/sbin/hping3 /opt/symlinks/
@@ -21,6 +22,12 @@ function install_apttools() {
 	ln -sf /usr/bin/tshark /opt/symlinks/
 	ln -sf /usr/sbin/p0f /opt/symlinks/
 	ln -sf /usr/sbin/dnsmasq /opt/symlinks/
+	ln -sf /usr/bin/snmpbulkwalk /opt/symlinks/
+	ln -sf /usr/bin/snmp* /opt/symlinks/
+	ln -sf /usr/bin/memc* /opt/symlinks/
+	ln -sf /usr/sbin/arpspoof /opt/symlinks/
+	ln -sf /usr/sbin/dnsspoof /opt/symlinks/
+	ln -sf /usr/sbin/dsniff /opt/symlinks/
 }
 
 
@@ -41,6 +48,38 @@ function install_chisel() {
 }
 
 
+function install_bettercap() {
+	# Need to test
+	export DEBIAN_FRONTEND=noninteractive
+	apt install -y libusb-1.0-0 libusb-1.0-0-dev libpcap-dev libnetfilter-queue-dev
+	error_handling "installing bettercap dependencies" "Installed bettercap dependencies"
+	/opt/symlinks/go install github.com/bettercap/bettercap@latest
+	ln -sf /opt/repositories/go/bin/bettercap /opt/symlinks/
+	/opt/symlinks/bettercap -eval "caplets.update; q"
+}
+
+
+function install_updog() {
+	pipx install --global git+https://github.com/sc0tfree/updog.git
+	error_handling "installing updog" "Installed updog"
+	ln -sf /usr/local/bin/updog /opt/symlinks/
+}
+
+
+function install_vlanpwn() {
+	git clone https://github.com/pirenga/VLANPWN.git /opt/repositories/vlanpwn
+	error_handling "installing vlanpwn" "Installed vlanpwn"
+	cat /opt/repositories/vlanpwn/DoubleTagging.py | tr --delete '\r' | tee /opt/repositories/vlanpwn/DoubleTagging.py
+	cat /opt/repositories/vlanpwn/DTPHijacking.py | tr --delete '\r' | tee /opt/repositories/vlanpwn/DTPHijacking.py
+	chmod +x /opt/repositories/vlanpwn/DoubleTagging.py
+	chmod +x /opt/repositories/vlanpwn/DTPHijacking.py
+	ln -sf /opt/repositories/vlanpwn/DoubleTagging.py /opt/symlinks/
+	ln -sf /opt/repositories/vlanpwn/DTPHijacking.py /opt/symlinks/
+}
+
+
 install_apttools
 install_grpcurl
 install_chisel
+install_bettercap
+install_vlanpwn

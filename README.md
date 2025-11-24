@@ -12,7 +12,8 @@ You need to install [Docker](https://docs.docker.com/get-docker/) before proceed
 You can build this container utilizing the build script in the following manner:
 
 ```
-chmod +x ./build_container.sh && chmod +x ./accudo_cortice && ./build_container.sh
+chmod +x ./build_container.sh && sudo ./build_container.sh
+chmod +x ./make_symlinks.sh && sudo ./make_symlinks.sh
 ```
 
 Optionally you can download the data files which are wordlists and tools you can deploy on the target. <br>
@@ -24,7 +25,7 @@ chmod +x ./download_data.sh && ./download_data.sh
 
 ## Usage
 
-Start the docker container and obtain a shell by:
+You can add `/opt/symlinks` to your path and tools will be ready to use:
 ```
-./accudo_cortice
+export PATH=$PATH:/opt/symlinks/
 ```
