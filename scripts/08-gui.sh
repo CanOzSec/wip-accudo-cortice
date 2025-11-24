@@ -17,7 +17,7 @@ function install_burpsuite() {
 	# Fix chrome in docker problem.
 	export chromePath=$(find /opt/BurpSuiteCommunity/burpbrowser/ | grep chrome$)
 	mv $chromePath "$chromePath"_bin
-	echo -e "\#!/bin/sh\n\n\"$chromePath\"_bin --no-sandbox \"$@\"" | tee $chromePath
+	echo -e '#!/bin/sh\n\n'"$chromePath"'_bin --no-sandbox "$@"' | tee $chromePath
 	chmod +x $chromePath
 }
 
