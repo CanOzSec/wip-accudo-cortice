@@ -178,6 +178,15 @@ function install_ntdissector() {
 }
 
 
+function install_nopac() {
+	git clone https://github.com/Ridter/noPac.git /opt/repositories/noPac
+	error_handling "installing noPac" "Installed noPac"
+	sed -i 's/\/usr\/bin\/env python/\/opt\/repositories\/krbrelayx\/virt\/bin\/python3/g' /opt/repositories/noPac/noPac.py
+	chmod +x /opt/repositories/noPac/noPac.py
+	ln -sf /opt/repositories/noPac/noPac.py /opt/symlinks/
+}
+
+
 function make_executable() {
 	chmod +x /opt/symlinks/*
 }

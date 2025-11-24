@@ -35,6 +35,14 @@ function install_john() {
 }
 
 
+function install_rsactftool() {
+    pipx install --global git+https://github.com/RsaCtfTool/RsaCtfTool
+    error_handling "installing RsaCtfTool" "Installed RsaCtfTool"
+    ln -sf /usr/local/bin/RsaCtfTool /opt/symlinks/
+    ln -sf /usr/local/bin/rsacrack /opt/symlinks/
+}
+
+
 function install_terminal_tools() {
     apt install -y tmux neovim xq jq fzf file
     error_handling "installing terminal tools" "Installed terminal tools"
