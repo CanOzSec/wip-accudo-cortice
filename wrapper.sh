@@ -41,14 +41,14 @@ fi
 
 function run() {
 	docker run -a stdin -a stdout -a stderr														\
-	--env-file /opt/accudo-cortice/config/environment.conf 										\
+	--env-file /opt/rutila-corium/config/environment.conf 										\
 	-v $PWD:/opt/host --user "$user" $gui $vpn $chromiumGpu										\
 	-v /opt/attack/:/opt/attack -w /opt/host 													\
-	--mount type=bind,src=/opt/accudo-cortice/config/krb5.conf,dst=/etc/krb5.conf 				\
-	--mount type=bind,src=/opt/accudo-cortice/config/Responder.conf,dst=/etc/Responder.conf 	\
-	--mount type=bind,src=/opt/accudo-cortice/config/certs/responder.crt,dst=/etc/responder.crt \
-	--mount type=bind,src=/opt/accudo-cortice/config/certs/responder.key,dst=/etc/responder.key \
-	--network host --rm -it accudo-cortice $0 $args
+	--mount type=bind,src=/opt/rutila-corium/config/krb5.conf,dst=/etc/krb5.conf 				\
+	--mount type=bind,src=/opt/rutila-corium/config/Responder.conf,dst=/etc/Responder.conf 	\
+	--mount type=bind,src=/opt/rutila-corium/config/certs/responder.crt,dst=/etc/responder.crt \
+	--mount type=bind,src=/opt/rutila-corium/config/certs/responder.key,dst=/etc/responder.key \
+	--network host --rm -it rutila-corium $0 $args
 }
 
 
