@@ -27,7 +27,7 @@ function install_ghidra() {
 	unzip /tmp/ghidra -d /opt/repositories/
 	error_handling "installing ghidra" "Installed ghidra"
 	ln -sf /opt/repositories/ghidra_*/ghidraRun /opt/symlinks/
-	sed -i 's/bg jdk/fg jdk/' /opt/symlinks/ghidraRun
+	sed -i 's/bg jdk/fg jdk/' /opt/repositories/ghidra_*/ghidraRun
 }
 
 
