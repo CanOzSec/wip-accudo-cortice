@@ -2,9 +2,9 @@
 
 ## Description
 
-My reason for starting this project was to create an environment that was portable and that was in line with my expectations of a penetration testing environment. <br>
-My problem with the leading penetration testing environments was the prevalence of outdated packages or malfunctioning tools. <br> 
-To address this problem, I developed scripts that retrieve and install the tools directly from their sources. <br>
+I started this project to create a portable environment that met my expectations for a penetration testing environment. <br>
+I had three main problems with the leading penetration testing environments: outdated packages, malfunctioning tools, and isolation. <br>
+To address these issues, I developed scripts that retrieve and install tools directly from their sources, using Docker as an isolation layer. <br>
 
 ## Installation
 
