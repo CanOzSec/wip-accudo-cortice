@@ -30,6 +30,7 @@ function install_john() {
     cd /opt/repositories/john/src/ && ./configure && make -s clean && make -j8
     error_handling "installing john" "Installed john"
     echo -e '#!/bin/bash\n/opt/repositories/john/run/john --no-log --session=none --pot=john.pot "$@"' > /opt/symlinks/john
+    sed -iE 's|^.*\/usr\/bin\/env python[0-9]*.*$|\#!/usr\/bin\/env python3|' /opt/repositories/john/run/*.py
     ln -sf /opt/repositories/john/run/*2john* /opt/symlinks/
 }
 
@@ -63,7 +64,7 @@ function install_terminal_tools() {
 }
 
 
-function cleanup(){
+function cleanup() {
     rm -rf /tmp/*
     /opt/symlinks/go clean -cache
     su -Pc '/opt/symlinks/go clean -cache' - user

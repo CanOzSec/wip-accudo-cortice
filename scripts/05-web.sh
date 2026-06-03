@@ -104,6 +104,12 @@ function install_python_libraries() {
 }
 
 
+function fix_php_options() {
+	sed -i 's/;phar.readonly = On/phar.readonly = Off/g' /etc/php/*/cli/php.ini
+	sed -i 's/;phar.require_hash = On/phar.require_hash = Off/g' /etc/php/*/cli/php.ini
+}
+
+
 install_ffuf
 install_sqlmap
 install_jwttool
@@ -118,3 +124,4 @@ install_phpggc
 install_nuclei
 install_cookiemonster
 install_python_libraries
+fix_php_options

@@ -83,9 +83,27 @@ function install_vlanpwn() {
 }
 
 
+function install_sipvicious() {
+	pipx install --global git+https://github.com/EnableSecurity/sipvicious.git
+	error_handling "installing sipvicious" "Installed sipvicious"
+	ln -sf /usr/local/bin/sipvicious_* /opt/symlinks/
+}
+
+
+function install_mongosh() {
+	wget -qO- https://www.mongodb.org/static/pgp/server-8.0.asc | tee /etc/apt/trusted.gpg.d/server-8.0.asc
+	echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+	apt update && apt install -y mongodb-mongosh
+	error_handling "installing mongosh" "Installed mongosh"
+	ln -sf /usr/bin/mongosh /opt/symlinks/
+}
+
+
 install_apttools
 install_grpcurl
 install_chisel
 install_bettercap
 install_updog
 install_vlanpwn
+install_sipvicious
+install_mongosh
