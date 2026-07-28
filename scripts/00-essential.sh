@@ -22,7 +22,7 @@ function install_libraries() {
     apt install -y apt-utils libsasl2-dev libldap2-dev libcurl4-openssl-dev libreadline8 \
                    libreadline-dev libasound2 libxrender1 libxtst6 libxi6 libsqlite3-dev \
                    libbz2-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev tk-dev \
-                   libffi-dev liblzma-dev python3-openssl
+                   libffi-dev liblzma-dev mandoc python3-openssl
     error_handling "installing required libraries" "Installed required libraries"
 }
 
@@ -57,7 +57,7 @@ function install_cli_tools() {
 
 
 function create_user() {
-    useradd -s /bin/bash -m -p $(echo "password123!" | openssl passwd -1 -stdin) user > /dev/null 2>&1
+    useradd -s /bin/bash -m user > /dev/null 2>&1
     error_handling "creating user" "Created user"
     chown user:user /opt/repositories
 }

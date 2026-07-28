@@ -79,6 +79,8 @@ args = [
 	"--attach", "stdin",
 	"--attach", "stdout",
 	"--attach", "stderr",
+	"--ulimit", "core=0",
+	"--ulimit", "nofile=16384:16384",
 	"--env-file", f"{stateHome}/config/environment.conf",
 	"--workdir", "/opt/host",
 	"--volume", f"{Path.cwd()}:/opt/host",
@@ -94,6 +96,9 @@ args = [
 	"rutila-corium",
 	programName,
 ]
+
+if programName == "proxychains4":
+	programName = programArgs[0]
 
 optionalArgs = []
 if programName not in ttyLessPrograms:

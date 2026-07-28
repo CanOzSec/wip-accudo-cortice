@@ -58,6 +58,16 @@ function install_stegoveritas() {
 }
 
 
+function install_awscli()
+{
+    curl -fLo /tmp/awscliv2.zip https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    unzip /tmp/awscliv2.zip -d /tmp/
+    /tmp/aws/install
+    error_handling "installing awscli" "Installed awscli"
+    ln -sf /usr/local/bin/aws /opt/symlinks/
+}
+
+
 function install_terminal_tools() {
     apt install -y tmux neovim fzf file
     error_handling "installing terminal tools" "Installed terminal tools"
@@ -88,6 +98,8 @@ function cleanup() {
     rm -rf /opt/repositories/sqlmap/.git*
     rm -rf /opt/repositories/theharvester/.git*
     rm -rf /opt/repositories/username-anarchy/.git*
+    # Clean temporary rust toolchain.
+    rm -rf /opt/languages/rust/toolchains/stable-x86_64-unknown-linux-gnu/
     # Workaround for llvm Too many levels of symbolic links @ dir_initialize
     rm -rf /usr/lib/llvm-19/build/Debug+Asserts
     rm -rf /usr/lib/llvm-19/build/Release
@@ -110,6 +122,7 @@ install_rsactftool
 set_java_version
 install_zsteg
 install_stegoveritas
+install_awscli
 install_terminal_tools
 cleanup
 make_executable

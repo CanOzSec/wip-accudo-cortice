@@ -34,8 +34,15 @@ function install_go() {
 function install_rust() {
     mkdir -p /opt/languages/rust
     curl https://sh.rustup.rs -sSf | CARGO_HOME=/opt/languages/rust/.cargo RUSTUP_HOME=/opt/languages/rust/.rustup sh -s -- --default-toolchain none -y
-    error_handling "installing rust" "Installed rust"
     ln -sf /opt/languages/rust/.cargo/bin/* /opt/symlinks/
+    # PATH workaround for compatibility.
+    ln -sf /opt/symlinks/cargo /usr/local/bin/
+    ln -sf /opt/symlinks/rustc /usr/local/bin/
+    # Rust default toolkit is not installed, so install it temporarily to preserve space.
+    export RUSTUP_HOME=/opt/languages/rust/.rustup
+    export CARGO_HOME=/opt/languages/rust/.cargo
+    /opt/symlinks/rustup default stable
+    error_handling "installing rust" "Installed rust"
 }
 
 

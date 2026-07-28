@@ -40,6 +40,10 @@ function install_bloodyad() {
 
 
 function install_netexec() {
+	export RUSTUP_HOME=/opt/languages/rust/.rustup
+	export CARGO_HOME=/opt/languages/rust/.cargo
+	export PATH=$PATH:/opt/languages/rust/.cargo/bin
+
 	pipx install --global git+https://github.com/Pennyw0rth/NetExec
 	error_handling "installing NetExec" "Installed NetExec"
 	ln -sf /usr/local/bin/NetExec /opt/symlinks/
@@ -143,6 +147,7 @@ function install_hashgrab() {
 	python3 -m venv /opt/repositories/hashgrab/virt
 	/opt/repositories/hashgrab/virt/bin/python3 -m pip install -r /opt/repositories/hashgrab/requirements.txt
 	sed -i 's/import argparse/#!\/opt\/repositories\/hashgrab\/virt\/bin\/python3\nimport argparse/' /opt/repositories/hashgrab/hashgrab.py
+	sed -i 's/{os.path.dirname(os.path.abspath(__file__))}/\/tmp/g' /opt/repositories/hashgrab/hashgrab.py 
 	chmod +x /opt/repositories/hashgrab/hashgrab.py
 	ln -sf /opt/repositories/hashgrab/hashgrab.py /opt/symlinks/
 }
@@ -190,11 +195,10 @@ function install_nopac() {
 
 
 function install_rusthound() {
-	export RUSTUP_HOME=/tmp/.rustup
+	export RUSTUP_HOME=/opt/languages/rust/.rustup
 	export CARGO_HOME=/opt/languages/rust/.cargo
 	export PATH=$PATH:/opt/languages/rust/.cargo/bin
-	# Rust default toolkit is not installed, so install it temporarily to preserve space.
-	/opt/symlinks/rustup default stable
+
 	/opt/symlinks/cargo install rusthound-ce
 	error_handling "installing rusthound-ce" "Installed rusthound-ce"
 	ln -sf /opt/languages/rust/.cargo/bin/rusthound-ce /opt/symlinks/
@@ -217,6 +221,57 @@ function install_ntlm_reflection_poc() {
 	sed -i 's/\/usr\/bin\/env python/\/opt\/repositories\/ntlm-reflection\/virt\/bin\/python3/g' /opt/repositories/ntlm-reflection/dnstool.py
 	ln -sf 	/opt/repositories/ntlm-reflection/CVE-2025-33073.py /opt/symlinks/
 	ln -sf /opt/repositories/ntlm-reflection/CVE-2025-33073.py /opt/symlinks/ntlm-reflection
+}
+
+
+function install_gpohound() {
+	pipx install --global git+https://github.com/cogiceo/GPOHound
+	error_handling "installing gpohound" "Installed gpohound"
+	ln -sf /usr/local/bin/gpohound /opt/symlinks/
+}
+
+
+function install_sccmhunter() {
+	pipx install --global git+https://github.com/garrettfoster13/sccmhunter/
+	error_handling "installing sccmhunter" "Installed sccmhunter"
+	ln -sf /usr/local/bin/sccmhunter.py /opt/symlinks/sccmhunter
+}
+
+
+function install_pxethiefy() {
+	pipx install --global git+https://github.com/csandker/pxethiefy
+	error_handling "installing pxethiefy" "Installed pxethiefy"
+	ln -sf /usr/local/bin/pxethiefy /opt/symlinks/
+}
+
+
+function install_sccmsecrets() {
+	git clone https://github.com/synacktiv/SCCMSecrets /opt/repositories/SCCMSecrets
+	python3 -m venv /opt/repositories/SCCMSecrets/virt
+	/opt/repositories/SCCMSecrets/virt/bin/python3 -m pip install -r /opt/repositories/SCCMSecrets/requirements.txt
+	error_handling "installing SCCMSecrets" "Installed SCCMSecrets"
+	echo '#!/opt/repositories/SCCMSecrets/virt/bin/python3' | cat - /opt/repositories/SCCMSecrets/SCCMSecrets.py > /opt/repositories/SCCMSecrets/sccmsecrets
+	chmod +x /opt/repositories/SCCMSecrets/sccmsecrets
+	ln -sf /opt/repositories/SCCMSecrets/sccmsecrets /opt/symlinks/
+}
+
+
+function install_zerologon() {
+	git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/repositories/zerologon
+	error_handling "installing Zerologon" "Installed Zerologon"
+	echo '#!/opt/pipx/venvs/impacket/bin/python3' | cat - /opt/repositories/zerologon/cve-2020-1472-exploit.py > /opt/repositories/zerologon/zerologon
+	echo '#!/opt/pipx/venvs/impacket/bin/python3' | cat - /opt/repositories/zerologon/restorepassword.py > /opt/repositories/zerologon/restorepassword
+	chmod +x /opt/repositories/zerologon/zerologon
+	chmod +x /opt/repositories/zerologon/restorepassword
+	ln -sf /opt/repositories/zerologon/zerologon /opt/symlinks/
+	ln -sf /opt/repositories/zerologon/restorepassword /opt/symlinks/
+}
+
+
+function install_pylnk3() {
+	pipx install --global pylnk3
+	error_handling "installing pylnk3" "Installed pylnk3"
+	ln -sf /usr/local/bin/pylnk3 /opt/symlinks/
 }
 
 
@@ -244,3 +299,9 @@ install_nopac
 install_rusthound
 install_relayinformer
 install_ntlm_reflection_poc
+install_gpohound
+install_sccmhunter
+install_pxethiefy
+install_sccmsecrets
+install_zerologon
+install_pylnk3
