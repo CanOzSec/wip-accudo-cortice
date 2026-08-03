@@ -67,7 +67,10 @@ localStateFixes = {
 	"BurpSuiteCommunity":[f"{stateHome}/BurpSuiteCommunity_state", "/home/user/.BurpSuite,/home/user/.java"],
 	"sqlmap"            :[f"{stateHome}/sqlmap_state", "/home/user/.sqlmap"],
 	"cargo"             :[f"{stateHome}/cargo_state", "/opt/languages/rust/.cargo/registry", f"{stateHome}/rustup_state", "/opt/languages/rust/.rustup/"],
-	"rustup"            :[f"{stateHome}/rustup_state", "/opt/languages/rust/.rustup/"]
+	"rustup"            :[f"{stateHome}/rustup_state", "/opt/languages/rust/.rustup/"],
+	"sliver-server"     :[f"{stateHome}/sliver-server_state", "/home/user/.sliver/"],
+	"sliver-client"     :[f"{stateHome}/sliver-client_state", "/home/user/.sliver-client/"]
+
 }
 
 programName = sys.argv[0].split("/")[-1]
